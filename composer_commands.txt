@@ -1,3 +1,397 @@
 
-composer create-project --prefer-dist laravel/laravel angularjs
+*******************************************************************************************************
+For install laravel jquery project
+*******************************************************************************************************
+composer create-project --prefer-dist laravel/laravel angularjs [for install laravel jquery framework]
+
+
+**********************************************************************************************************
+For install laravel angularjs project
+**********************************************************************************************************
+composer create-project laravel/laravel laravel-angular-crud 5.0 [ for install laravel angular framework ]
+
+
 [RRygi3WL3m8veVJzXOlOOOprzcM3lX0c]
+
+****************************************************
+For  making Controller
+****************************************************
+php artisan make:controller YourNameController
+
+
+****************************************************
+For making Model
+****************************************************
+php artisan make:model YourModelName
+
+after creating model 
+
+*****************************************************
+another artisan commands 
+******************************************************
+php artisan key:generate
+php artisan routes
+php artisan serve
+php artisan cache:clear
+php artisan up
+php artisan env
+php artisan help
+php artisan changes
+
+
+
+
+
+
+
+
+
+
+
+
+*********************************************************
+Model Sample
+*********************************************************
+class ModelName extends Model {
+	protected $table = 'YourModelNameInSmallLetter';
+	protected $fillable = ['name','email','phone'];
+}	
+
+
+
+
+
+
+*****************************************************************************
+Laravel DB 
+*****************************************************************************
+*****************************************************************************
+DB::select("select * from tablename where id = ?" , array('value'));
+DB::insert("insert into tablename(id,name) values(?,?)" , array(1,'Khokon'));
+DB::update("update tablename set name= ? where id=",array(1));
+DB::delete("delete from tablename where id=?" , array(1));
+DB::statement("drop table tablename");
+
+
+
+
+
+
+*********************************************************************************
+Routes For HTTP Verbs for REST
+*********************************************************************************
+*********************************************************************************
+Route::any('/your_url',function(){});
+Route::post('/your_url',function(){});
+Route::put('/your_url',function(){});
+Route::delete('/your_url',function(){});
+
+
+
+
+
+
+
+
+************************************************************
+Laravel Eloquent
+************************************************************
+************************************************************
+You can insert data another way
+************************************************************
+$workName= Input::get('name'); // name is same as html form
+$email = Input::get('email');
+$phone = Input::get('phone');
+$data = array(
+    'name'=>$workName,  // name is same as field name
+    'email'=>$email,
+    'phone'=>$phone
+);
+
+Contact::create($data);
+
+
+
+**********************************************************
+You can Insert data by creating an object of your model
+**********************************************************
+$contact = new Contact();
+$contact->name = Input::get('name');
+$contact->email = Input::get('email');
+$contact->phone = Input::get('phone');
+$contact->save();
+
+
+****************************************************************************
+Search Data by object of your model
+****************************************************************************
+Contact::find($id);
+
+****************************************************************************
+Specific data delte by object of your model
+****************************************************************************
+Contact::find($id)->delete();
+
+*****************************************************************************
+Show all records by object of your model
+*****************************************************************************
+Contact::all();
+
+*****************************************************************************
+Search with where keyword
+*****************************************************************************
+Contact::where('field_name','=','search_key')->get();
+Contact::where('field_name','=','search_key')->count();
+Contact::whereRaw('field_name=value and filed_name=value',array(20))->get()
+
+
+
+
+
+
+
+
+in location: database/migrations
+***************************************************************************
+public function up() 
+{
+	Schema::create('YourModelNameInSmallLetter' , function(Blueprint $table) {
+	    $table->increments('id');
+	    $table->string('name');
+	    $table->boolean('status');
+	    $table->timestamps();
+	});
+}	
+
+
+public function down() {
+    Schema::drop('YourModelNameInSmallLetter');
+}
+
+
+then run below this command
+****************************
+php artisan migrate
+
+your table will be generate automatically
+
+
+
+
+
+
+
+**************************************************************************************
+**************************************************************************************
+Controller to view data passing
+**************************************************************************************
+**************************************************************************************
+Controller portion
+*****************************
+public function index() {
+    $data = Contact::all();
+    return view('home')->with('data',$data);
+}
+
+view portion
+*********************************************
+@foreach($data as $row)
+<tr>
+	<td>{{ $row->work }}</td>
+	<td>{{ $row->status }} </td>
+</tr>
+@endforeach
+
+
+
+
+
+*************************************************************************************
+*************************************************************************************
+Ajax Routes and response sample
+*************************************************************************************
+Route::get('/your_url',function(param){
+   return View::make('your_url'); plain view
+   return View::make('your_url')->with('data',$result); view with data
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+************************************************************************************
+Login Credential Laravel
+************************************************************************************
+************************************************************************************
+Auth::check();
+Auth::user();
+Auth::login(User::find($id));
+Auth::loginUsingId($id);
+Auth::logout();
+
+
+
+
+
+
+
+
+
+
+************************************************************************************
+************************************************************************************
+Session retrieve in Laravel
+************************************************************************************
+Session::get('session_varriable_name');
+
+
+*************************************************************************************
+Session store in Laravel
+*************************************************************************************
+Session::set('session_varriable_name' , $your_session_value);
+
+*************************************************************************************
+Check specific session exist or not
+**************************************************************************************
+Session::has('session_varriable_name');
+
+***************************************************************************************
+Specific session remove
+***************************************************************************************
+Session::forget('session_varriable_name'); 
+
+***************************************************************************************
+Remove all session values
+***************************************************************************************
+Session::flush();
+
+
+
+
+
+
+
+*************************************************************************************
+*************************************************************************************
+*************************************************************************************
+*************************************************************************************
+Routing sample
+*************************************************************************************
+*************************************************************************************
+Route::get('/your_url_name', 'yourcontroller@yourcontrollerspecificfunction');
+
+Route::get('/your_url_name/{id}' , 'yourcontroller@yourcontrollerspecificfunction');
+
+Route::post('/your_url_name' ,'yourcontroller@yourcontrollerspecificfunction');
+
+another way with callback function
+***********************************
+Route::get('/your_url_name',function(you_can_use_parameter_here){
+    your functional code here
+});
+
+
+
+
+*************************************************************************************
+*************************************************************************************
+*************************************************************************************
+redirect functions
+*************************************************************************************
+
+plain redirect
+**********************************
+return redirect('/your_url_name')
+
+same location back
+**********************************
+return  redirect()->back()
+
+
+redirect with message
+***********************************************************************************
+return redirect('/your_url_name')->with('success','Your successfully message here')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+************************************************************************************
+Input File  Uploads Credentials
+************************************************************************************
+Input::file('file_name');
+Input::hasFile('file_name');
+
+Input::file('name')->getRealPath();
+Input::file('name')->getSize();
+Input::file('name')->getMimeType();
+
+upload function
+*************************************************
+Input::file('name')->move($destination , $source);
+
+
+
+
+
+***********************************************************************************
+Files operation (Like FTP operations)
+***********************************************************************************
+File::exists('path');
+File::get('path');
+File::delete('path');
+File::copy('source_path','dest_path');
+File::move('source_path','dest_path');
+
+
+File::files('directory');
+File::allFiles('directory');
+File::directories('directory');
+
+File::makeDirectory('path',$mode=0777,$recursive=false);
+File::copyDirectory('source','destination',$options=null);
+File::deleteDirectory('directory',$preserve=false);
+File::cleanDirectory('directory');
+
+
+
+
+
+
+
+
+Resources Views directory Changes
+************************************************************************************
+************************************************************************************
+traditional process
+*********************
+<link href="/css/app.css" rel="stylesheet">
+
+replace laravel process
+************************
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
+
+
+
+
+
