@@ -1,0 +1,3 @@
+
+composer create-project --prefer-dist laravel/laravel angularjs
+[RRygi3WL3m8veVJzXOlOOOprzcM3lX0c]
